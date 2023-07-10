@@ -2,6 +2,7 @@ import { notFoundError, unauthorizedError } from "@/errors";
 import paymentRepository from "@/repositories/payment-repository/index";
 import ticketRepository from "@/repositories/ticket-repository/index";
 import enrollmentRepository from "@/repositories/enrollment-repository/index";
+import { CardPaymentParams, PaymentParams } from '@/protocols';
 
 async function getPaymentByTicketId(userId: number, ticketId: number) {
   await checkTicket(ticketId, userId);
@@ -25,9 +26,27 @@ async function checkTicket(ticketId: number, userId: number) {
   }
 }
 
+async function paymentProcess(ticketId: number, userId: number, cardData: CardPaymentParams) {
+    await checkTicket(ticketId, userId);
+
+    const ticket = await ticketRepository.findTickeWithTypeById(ticketId);
+
+    const paymentData: PaymentParams = {
+      ticketId,
+      value: ticket.TicketType.price,
+      cardIssuer: cardData.issuer,
+      cardLastDigits: cardData.number.toString().slice(-4),
+    };
+
+    const payment = await paymentRepository.createPayment(ticketId, paymentData);
+    await ticketRepository.ticketProcessPayment(ticketId);
+    return payment;
+}
+
 const paymentService = {
   getPaymentByTicketId,
   checkTicket,
+  paymentProcess,
 };
 
 export default paymentService;
