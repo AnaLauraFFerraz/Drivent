@@ -24,5 +24,21 @@ export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Respo
 }
 
 export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
-  //TO DO
+  const { userId } = req;
+  const { ticketId, cardData } = req.body;
+
+  if (!ticketId || !cardData) {
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+
+  try {
+    const payment = await paymentService.paymentProcess(ticketId, userId, cardData);
+    if (!payment) {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+
+    return res.status(httpStatus.OK).send(payment);
+  } catch (error) {
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
 }
