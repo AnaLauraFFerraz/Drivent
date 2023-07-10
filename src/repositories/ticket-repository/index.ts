@@ -1,5 +1,5 @@
 import { prisma } from "@/config";
-import { Ticket, TicketStatus } from "@prisma/client";
+import { TicketStatus } from "@prisma/client";
 import { CreateTicketParams } from '@/protocols';
 
 async function findTicketTypes() {

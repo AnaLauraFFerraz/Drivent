@@ -8,22 +8,17 @@ async function getPaymentByTicketId(userId: number, ticketId: number) {
   await checkTicket(ticketId, userId);
 
   const payment = await paymentRepository.findPaymentByTicketId(ticketId);
-  if (!payment) {
-    throw notFoundError();
-  }
+  if (!payment) throw notFoundError();
+
   return payment;
 }
 
 async function checkTicket(ticketId: number, userId: number) {
   const ticket = await ticketRepository.findTicketById(ticketId);
-  if (!ticket) {
-    throw notFoundError();
-  }
+  if (!ticket) throw notFoundError();
 
   const enrollment = await enrollmentRepository.findById(ticket.enrollmentId);
-  if (enrollment.userId !== userId) {
-    throw unauthorizedError();
-  }
+  if (enrollment.userId !== userId) throw unauthorizedError();
 }
 
 async function paymentProcess(ticketId: number, userId: number, cardData: CardPaymentParams) {
