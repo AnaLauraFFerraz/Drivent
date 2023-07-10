@@ -15,7 +15,7 @@ async function getPaymentByTicketId(userId: number, ticketId: number) {
 }
 
 async function checkTicket(ticketId: number, userId: number) {
-  const ticket = await ticketRepository.findTickeyById(ticketId);
+  const ticket = await ticketRepository.findTicketById(ticketId);
   if (!ticket) {
     throw notFoundError();
   }
@@ -29,7 +29,7 @@ async function checkTicket(ticketId: number, userId: number) {
 async function paymentProcess(ticketId: number, userId: number, cardData: CardPaymentParams) {
     await checkTicket(ticketId, userId);
 
-    const ticket = await ticketRepository.findTickeWithTypeById(ticketId);
+    const ticket = await ticketRepository.findTicketWithTypeById(ticketId);
 
     const paymentData: PaymentParams = {
       ticketId,
@@ -39,7 +39,7 @@ async function paymentProcess(ticketId: number, userId: number, cardData: CardPa
     };
 
     const payment = await paymentRepository.createPayment(ticketId, paymentData);
-    await ticketRepository.ticketProcessPayment(ticketId);
+    await ticketRepository.processPayment(ticketId);
     return payment;
 }
 
