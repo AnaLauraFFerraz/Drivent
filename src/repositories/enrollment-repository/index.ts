@@ -26,7 +26,7 @@ async function upsert(
 
 async function findById(enrollmentId: number) {
   return prisma.enrollment.findFirst({
-    where: { id: enrollmentId }
+    where: { id: enrollmentId },
   });
 }
 
