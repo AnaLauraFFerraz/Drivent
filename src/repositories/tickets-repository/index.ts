@@ -1,17 +1,19 @@
-import { TicketStatus, TicketType } from '@prisma/client';
-import { prisma } from '@/config';
+import { prisma } from "@/config";
+import { TicketStatus } from "@prisma/client";
 import { CreateTicketParams } from '@/protocols';
 
-async function findTicketTypes(): Promise<TicketType[]> {
+async function findTicketTypes() {
   return prisma.ticketType.findMany();
 }
 
 async function findTicketByEnrollmentId(enrollmentId: number) {
   return prisma.ticket.findFirst({
-    where: { enrollmentId },
-    include: {
-      TicketType: true
+    where: {
+      enrollmentId,
     },
+    include: {
+      TicketType: true,
+    }
   });
 }
 
