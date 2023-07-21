@@ -1,4 +1,6 @@
 export * from './cannot-enroll-before-start-date-error';
+export * from './cannot-list-hotels-error';
+export * from './cannot-book-error';
 export * from './conflict-error';
 export * from './invalid-data-error';
 export * from './invalid-email-error';
