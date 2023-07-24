@@ -52,8 +52,10 @@ async function updateBookingRoomById(userId: number, roomId: number) {
 }
 
 const bookingService = {
-    bookingRoomById,
     getBooking,
+    checkEnrollmentTicket,
+    checkValidBooking,
+    bookingRoomById,
     updateBookingRoomById,
 };
 
