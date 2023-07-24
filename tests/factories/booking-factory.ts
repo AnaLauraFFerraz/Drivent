@@ -19,7 +19,7 @@ export function createBooking({ roomId, userId }: CreateBookingParams) {
 
 export function createValidBody() {
   return {
-    "roomId": faker.random.numeric(),
+    "roomId": faker.datatype.number(),
   };
 }
 
@@ -45,15 +45,15 @@ export function getBookingReturn() {
 export function getBookingDifferentUserIdReturn() {
   const booking: Booking & { Room: Room } = {
     id: 1,
-    userId: 2,
-    roomId: 1,
+    userId: faker.datatype.number(),
+    roomId: faker.datatype.number(),
     createdAt: new Date(),
     updatedAt: new Date(),
     Room: {
-      id: 1,
-      name: 'Room 1',
-      capacity: 2,
-      hotelId: 1,
+      id: faker.datatype.number(),
+      name: faker.datatype.string(),
+      capacity: faker.datatype.number(),
+      hotelId: faker.datatype.number(),
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -71,8 +71,8 @@ export function findTicketByEnrollmentIdReturn() {
     updatedAt: new Date(),
     TicketType: {
       id: 1,
-      name: 'Teste',
-      price: 300,
+      name: faker.datatype.string(),
+      price: faker.datatype.number(),
       isRemote: false,
       includesHotel: true,
       createdAt: new Date(),
@@ -86,23 +86,23 @@ export function findTicketByEnrollmentIdReturn() {
 export function enrollmentWithAddressReturn() {
   const expected: Enrollment & { Address: Address[] } = {
     id: 1,
-    name: 'John Doe',
-    cpf: '12345678901',
+    name: faker.name.firstName(),
+    cpf: '01234567890',
     birthday: new Date(),
-    phone: '123456789',
+    phone: faker.phone.phoneNumber(),
     userId: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
     Address: [
       {
         id: 1,
-        cep: '12345678',
-        street: 'Main Street',
-        city: 'New York',
-        state: 'NY',
-        number: '123',
-        neighborhood: 'Downtown',
-        addressDetail: 'Apartment 456',
+        cep: faker.address.zipCode(),
+        street: faker.address.streetName(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        number: faker.address.buildingNumber(),
+        neighborhood: faker.address.county(),
+        addressDetail: faker.address.buildingNumber(),
         enrollmentId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -116,7 +116,7 @@ export function enrollmentWithAddressReturn() {
 export function findRoomByIdReturn() {
   const expected: Room = {
     id: 1,
-    name: 'Teste',
+    name: faker.datatype.string(),
     capacity: 2,
     hotelId: 1,
     createdAt: new Date(),
@@ -136,7 +136,7 @@ export function findBookingByRoomIdReturn() {
       updatedAt: new Date(),
       Room: {
         id: 1,
-        name: 'Teste',
+        name: faker.datatype.string(),
         capacity: 2,
         hotelId: 1,
         createdAt: new Date(),
@@ -158,7 +158,7 @@ export function findBookingByRoomIdNoCapacityReturn() {
       updatedAt: new Date(),
       Room: {
         id: 1,
-        name: 'Teste',
+        name: faker.datatype.string(),
         capacity: 1,
         hotelId: 1,
         createdAt: new Date(),
@@ -173,7 +173,7 @@ export function findBookingByRoomIdNoCapacityReturn() {
 export function findRoomByIdNoCapacityReturn() {
   const expected: Room = {
     id: 1,
-    name: 'Teste',
+    name: faker.datatype.string(),
     capacity: 1,
     hotelId: 1,
     createdAt: new Date(),
